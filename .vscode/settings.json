@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "cstddef": "cpp",
+        "initializer_list": "cpp",
+        "valarray": "cpp"
+    }
+}
