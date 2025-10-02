@@ -7,15 +7,19 @@
 namespace CmdBased {
     class CommandScheduler {
     public:
-        CommandScheduler(const SubsystemBase *subs, size_t subLen)
+        CommandScheduler(SubsystemBase **subs, size_t subLen)
             : kSubsystems(subs), kSubsystemsLen(subLen) {}
         
         void periodic();    
-
+        bool schedule(CommandBase *command);
     private:
-        const SubsystemBase *const kSubsystems;
+        bool cancel(CommandBase *command, bool interrupt);
+        
+        SubsystemBase **const kSubsystems;
         const size_t kSubsystemsLen;
 
-        CommandBase *m_scheduledCommand = nullptr; // first scheduled command
+        CommandBase m_scheduledHead{nullptr, 0}; // head of scheduled cmd list
+        // NOTE: This head will not be executed; the first command to run is
+        //       its next command in the linked list.
     };
 };
